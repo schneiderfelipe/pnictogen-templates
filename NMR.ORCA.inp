@@ -1,0 +1,16 @@
+{% set method = "PBEh-3c" %}
+{% set keywords = "NMR def2/JK" %}
+{% set solvent = "chloroform" %}
+# {{ molecule.name }}
+! {{ method }} {{ keywords }} LargePrint
+{% if solvent is defined %}
+! CPCM
+%cpcm
+ smd true
+ smdsolvent "{{ solvent }}"
+end
+{% endif %}
+
+*xyz {{ molecule.charge }} {{ molecule.mult }}
+{{ molecule.to_string("xyz", with_header=False) }}
+*

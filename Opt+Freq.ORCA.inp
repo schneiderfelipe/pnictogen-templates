@@ -1,0 +1,16 @@
+{% set method = "B97-3c" %}
+{% set keywords = "Opt Freq TightOpt" %}
+{% set solvent = "chloroform" %}
+# {{ molecule.name }}
+! {{ method }} {{ keywords }} LargePrint
+{% if solvent is defined %}
+! CPCM
+%cpcm
+ smd true
+ smdsolvent "{{ solvent }}"
+end
+{% endif %}
+
+*xyz {{ molecule.charge }} {{ molecule.mult }}
+{{ molecule.to_string("xyz", with_header=False) }}
+*

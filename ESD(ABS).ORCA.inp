@@ -1,0 +1,37 @@
+{% set method = "B97-3c" %}
+{% set keywords = "ESD(ABS)" %}
+{% set solvent = "chloroform" %}
+{% set nroots = 1 %}
+{# set unit = "cm-1" #}
+{# set gshessian = molecule.name | replace('.xyz', '') ~ ".hess" #}
+# {{ molecule.name }}
+! {{ method }} {{ keywords }} LargePrint
+{% if solvent is defined %}
+! CPCM
+%cpcm
+ smd true
+ smdsolvent "{{ solvent }}"
+end
+{% endif %}
+
+%tddft
+ nroots {{ nroots }}
+end
+
+%esd
+ states {{ range(1, nroots + 1) | join(",") }}
+ doht true
+{% if unit is defined %}
+ unit {{ unit }}
+{% endif %}
+{% if solvent is defined %}
+ linew 200
+{% endif %}
+{% if gshessian is defined %}
+ gshessian "{{ gshessian }}"
+{% endif %}
+end
+
+*xyz {{ molecule.charge }} {{ molecule.mult }}
+{{ molecule.to_string("xyz", with_header=False) }}
+*
