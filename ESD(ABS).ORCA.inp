@@ -5,7 +5,7 @@
 {# set unit = "cm-1" #}
 {# set gshessian = molecule.name | replace('.xyz', '') ~ ".hess" #}
 # {{ molecule.name }}
-! {{ method }} {{ keywords }} LargePrint
+! {{ method }} {{ keywords }} TightSCF Grid4 FinalGrid5 LargePrint
 {% if solvent is defined %}
 ! CPCM
 %cpcm

@@ -2,7 +2,7 @@
 {% set keywords = "Opt Freq TightOpt" %}
 {% set solvent = "chloroform" %}
 # {{ molecule.name }}
-! {{ method }} {{ keywords }} LargePrint
+! {{ method }} {{ keywords }} TightSCF Grid4 FinalGrid5 LargePrint
 {% if solvent is defined %}
 ! CPCM
 %cpcm
