@@ -1,0 +1,36 @@
+{% set method = "B97-3c" %}
+{% set keywords = "NEB-TS Freq TightOpt" %}
+{% set solvent = "chloroform" %}
+{% set nimages = 8 %}
+{% set preopt_ends = "true" %}
+{% set neb_end_xyzfile = molecule.name | replace('.xyz', '') | replace('_reactant', '') ~ "_product.xyz" %}
+{# set neb_ts_xyzfile = molecule.name | replace('.xyz', '') | replace('_reactant', '') ~ "_CI-NEB_converged.xyz" #}
+{# set neb_restart_xyzfile = molecule.name | replace('.xyz', '') ~ ".allxyz" #}
+# {{ molecule.name }}
+! {{ method }} {{ keywords }} LargePrint
+{% if solvent is defined %}
+! CPCM
+%cpcm
+ smd true
+ smdsolvent "{{ solvent }}"
+end
+{% endif %}
+
+%neb
+ nimages {{ nimages }}
+{% if neb_restart_xyzfile is defined %}
+ neb_restart_xyzfile "{{ neb_restart_xyzfile }}"
+{% else %}
+ preopt_ends {{ preopt_ends }}
+{% if neb_end_xyzfile is defined %}
+ neb_end_xyzfile "{{ neb_end_xyzfile }}"
+{% endif %}
+{% if neb_ts_xyzfile is defined %}
+ neb_ts_xyzfile "{{ neb_ts_xyzfile }}"
+{% endif %}
+{% endif %}
+end
+
+*xyz {{ molecule.charge }} {{ molecule.mult }}
+{{ molecule.to_string("xyz", with_header=False) }}
+*
