@@ -3,7 +3,7 @@
 {% set solvent = "chloroform" %}
 {% set nroots = 1 %}
 {# set unit = "cm-1" #}
-{# set gshessian = molecule.name | replace('.xyz', '') ~ ".hess" #}
+{# set gshessian = molecule.name | replace(".xyz", "") ~ ".hess" #}
 # {{ molecule.name }}
 ! {{ method }} {{ keywords }} TightSCF Grid4 FinalGrid5 LargePrint
 {% if solvent is defined %}
