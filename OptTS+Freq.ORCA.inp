@@ -1,0 +1,31 @@
+{% set method = "B97-3c" %}
+{% set keywords = "OptTS Freq TightOpt" %}
+{% set solvent = "chloroform" %}
+{% set ts_mode = "B 0 1" %}
+{% set calc_hess = "true" %}
+{# set inhessname = molecule.name | replace(".xyz", "") ~ ".hess" #}
+# {{ molecule.name }}
+! {{ method }} {{ keywords }} TightSCF Grid4 FinalGrid5 LargePrint
+{% if solvent is defined %}
+! CPCM
+%cpcm
+ smd true
+ smdsolvent "{{ solvent }}"
+end
+{% endif %}
+
+%geom
+{% if ts_mode is defined %}
+ ts_mode { {{ ts_mode }} } end
+{% endif %}
+{% if inhessname is defined %}
+ inhess read
+ inhessname "{{ inhessname }}"
+{% else %}
+ calc_hess {{ calc_hess }}
+{% endif %}
+end
+
+*xyz {{ molecule.charge }} {{ molecule.mult }}
+{{ molecule.to_string("xyz", with_header=False) }}
+*

@@ -3,9 +3,9 @@
 {% set solvent = "chloroform" %}
 {% set nimages = 8 %}
 {% set preopt_ends = "true" %}
-{% set neb_end_xyzfile = molecule.name | replace('.xyz', '') | replace('_reactant', '') ~ "_product.xyz" %}
-{# set neb_ts_xyzfile = molecule.name | replace('.xyz', '') | replace('_reactant', '') ~ "_CI-NEB_converged.xyz" #}
-{# set neb_restart_xyzfile = molecule.name | replace('.xyz', '') ~ ".allxyz" #}
+{% set neb_end_xyzfile = molecule.name | replace(".xyz", "") | replace("_reactant", "") ~ "_product.xyz" %}
+{% set neb_ts_xyzfile = molecule.name | replace(".xyz", "") | replace("_reactant", "") ~ "_CI-NEB_converged.xyz" %}
+{# set neb_restart_xyzfile = molecule.name | replace(".xyz", "") ~ ".allxyz" #}
 # {{ molecule.name }}
 ! {{ method }} {{ keywords }} TightSCF Grid4 FinalGrid5 LargePrint
 {% if solvent is defined %}
